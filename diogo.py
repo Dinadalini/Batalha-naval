@@ -52,22 +52,20 @@ print("Estes são os paises na guerra:\n1: Brasil\n2: Coreia do Norte\n3: Vatica
 
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
-    escolha= False
-    while escolha== False:
+    while True:
         for num, pais in PAISES.items():
             print(f'{num}. {pais}')
-        escolha_numero_pais= int(input("Digite o número de nação que você irá defender: "))
+        escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
         if escolha_numero_pais in PAISES:
             return PAISES[escolha_numero_pais]
         else:
-            print("Nação desconhecida. Digite um número válido")
-    return jogador_escolhe_pais()
+            print("Nação desconhecida. Digite um número válido.")
 
-#computador escolhe um país diferente do jogador aleatoriamente e printa o pais escolhido
-def computador_escolhe_pais():
-    paises_disponiveis_comp= list(PAISES.values())
-    paises_disponiveis_comp.remove(jogador_escolhe_pais)
-    escolha_do_pais_computador= random.choice(paises_disponiveis_comp)
+# Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
+def computador_escolhe_pais(pais_jogador):
+    paises_disponiveis_comp = list(PAISES.values())
+    paises_disponiveis_comp.remove(pais_jogador)
+    escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
     print(f'O computador escolheu o país: {escolha_do_pais_computador}')
     return escolha_do_pais_computador
 
