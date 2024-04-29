@@ -1,25 +1,25 @@
 import random
 
-
 def criar_tabuleiro():
-    colunas=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    linhas= list(range(1, 11))
-    tabuleiro= [['' for i in colunas] for i in linhas]
+    colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+    linhas = list(range(1, 11))
+    tabuleiro = [[' ' for _ in colunas] for _ in linhas]
     return tabuleiro
 
-def imprimir_tabuleiro (tabuleiro):
-    colunas = [' A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
-    print ('  '+ '  '.join(colunas))
-    for j, linha in enumerate(tabuleiro, start=1):
-        print(f'{j:2}'+ '   '.join(linha))
+def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
+    colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
+    cabecalho = '  ' + '  '.join(colunas)
+    print(f"    {cabecalho}          {cabecalho}")
+    for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
+        linha_jogador_formatada = '   '.join(linha_jogador)
+        linha_computador_formatada = '   '.join(linha_computador)
+        print(f"{i:2}  {linha_jogador_formatada}        {i:2}  {linha_computador_formatada}")
 
-tabuleiro_computador= criar_tabuleiro()
-tabuleiro_jogador= criar_tabuleiro()
+tabuleiro_computador = criar_tabuleiro()
+tabuleiro_jogador = criar_tabuleiro()
 
-print ("tabuleiro Computador:")
-imprimir_tabuleiro(tabuleiro_computador)
-print ("tabuleiro Jogador:")
-imprimir_tabuleiro(tabuleiro_jogador)
+# Imprime os tabuleiros lado a lado
+imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
 
 # quantidade de blocos por modelo de navio
 CONFIGURACAO = {
