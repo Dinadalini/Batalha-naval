@@ -46,73 +46,76 @@ PAISES= {
 #separação entre o tabuleiro e os países
 print("-------------------------")
 
-#print dos paises
 # frotas de cada pais
 PAISES_FROTAS =  {
+<<<<<<< HEAD
     'Brasil': {
+=======
+    '1: Brasil': {
+>>>>>>> eba512fc6e01a259dcdf64d1b85d3cdeaa132759
         'cruzador': 1,
         'torpedeiro': 2,
         'destroyer': 1,
         'couracado': 1,
         'porta-avioes': 1
     }, 
-    'Coreia do Norte': {
+    '2: Coreia do Norte': {
         'cruzador': 3, 
         'porta-avioes': 1, 
         'destroyer': 1, 
         'submarino': 1, 
         'couracado': 1
     },
-    'Vaticano': {
+    '3: Vaticano': {
         'couracado': 1,
         'cruzador': 3, 
         'submarino': 1,
         'porta-avioes': 1, 
         'torpedeiro': 1
     },
-    'Tibet': {
+    '4: Tibet': {
         'cruzador': 1,
         'porta-avioes': 1,
         'couracado': 2,
         'destroyer': 1,
         'submarino': 1
     },
-    'China': {
+    '5: China': {
         'torpedeiro': 2,
         'cruzador': 1,
         'destroyer': 2,
         'couracado': 1,
         'submarino': 1
     },
-    'Estados Unidos': {
+    '6: Estados Unidos': {
         'cruzador': 1,
         'torpedeiro': 2,
         'destroyer': 1,
         'couracado': 1,
         'porta-avioes': 1
     }, 
-    'Inglaterra': {
+    '7: Inglaterra': {
         'cruzador': 3, 
         'porta-avioes': 1, 
         'destroyer': 1, 
         'submarino': 1, 
         'couracado': 1
     },
-    'Bahamas': {
+    '8: Bahamas': {
         'couracado': 1,
         'cruzador': 3, 
         'submarino': 1,
         'porta-avioes': 1, 
         'torpedeiro': 1
     },
-    'México': {
+    '9: México': {
         'cruzador': 1,
         'porta-avioes': 1,
         'couracado': 2,
         'destroyer': 1,
         'submarino': 1
     },
-    'Emirados Árabes Unidos': {
+    '10: Emirados Árabes Unidos': {
         'torpedeiro': 2,
         'cruzador': 1,
         'destroyer': 2,
@@ -125,6 +128,7 @@ PAISES_FROTAS =  {
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     while True:
+<<<<<<< HEAD
         print("Escolha um país e veja sua frota:")
         for num, (pais, frota) in PAISES_FROTAS.items():
             navios = ', '.join([f"{tipo}: {quantidade}" for tipo, quantidade in frota.items()])
@@ -133,6 +137,13 @@ def jogador_escolhe_pais():
         if escolha_numero_pais in PAISES_FROTAS:
             pais_escolhido, _ = PAISES_FROTAS[escolha_numero_pais]
             return pais_escolhido
+=======
+        for num, pais in PAISES_FROTAS.items():
+            print(f'{num}. {pais}')
+        escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
+        if escolha_numero_pais in PAISES:
+            return PAISES[escolha_numero_pais]
+>>>>>>> eba512fc6e01a259dcdf64d1b85d3cdeaa132759
         else:
             print("Nação desconhecida. Digite um número válido.")
 
