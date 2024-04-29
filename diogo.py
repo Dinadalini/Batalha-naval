@@ -1,5 +1,6 @@
 import random
 
+
 def criar_tabuleiro():
     colunas=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     linhas= list(range(1, 11))
