@@ -137,7 +137,6 @@ print("-------------------------")
 #print dos paises
 print("Estes são os paises na guerra:\n1: Brasil\n2: Coreia do Norte\n3: Vaticano\n4: Tibet\n5: China\n6: Estados Unidos\n7: Inglaterra\n8: Bahamas\n9: México\n10: Emirados Árabes Unidos")
 
-
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     for num, pais in PAISES.items():
