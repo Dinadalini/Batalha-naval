@@ -48,11 +48,7 @@ print("-------------------------")
 
 # frotas de cada pais
 PAISES_FROTAS =  {
-<<<<<<< HEAD
-    'Brasil': {
-=======
     '1: Brasil': {
->>>>>>> eba512fc6e01a259dcdf64d1b85d3cdeaa132759
         'cruzador': 1,
         'torpedeiro': 2,
         'destroyer': 1,
@@ -128,25 +124,13 @@ PAISES_FROTAS =  {
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     while True:
-<<<<<<< HEAD
-        print("Escolha um país e veja sua frota:")
-        for num, (pais, frota) in PAISES_FROTAS.items():
-            navios = ', '.join([f"{tipo}: {quantidade}" for tipo, quantidade in frota.items()])
-            print(f'{num}. {pais} - Frota: {navios}')
-        escolha_numero_pais = int(input("Digite o número do país que você irá defender: "))
-        if escolha_numero_pais in PAISES_FROTAS:
-            pais_escolhido, _ = PAISES_FROTAS[escolha_numero_pais]
-            return pais_escolhido
-=======
         for num, pais in PAISES_FROTAS.items():
             print(f'{num}. {pais}')
         escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
         if escolha_numero_pais in PAISES:
             return PAISES[escolha_numero_pais]
->>>>>>> eba512fc6e01a259dcdf64d1b85d3cdeaa132759
         else:
             print("Nação desconhecida. Digite um número válido.")
-
 
 # Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
 def computador_escolhe_pais(pais_jogador):
