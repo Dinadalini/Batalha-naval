@@ -47,7 +47,79 @@ PAISES= {
 print("-------------------------")
 
 #print dos paises
-print("Estes são os paises na guerra:\n1: Brasil\n2: Coreia do Norte\n3: Vaticano\n4: Tibet\n5: China\n6: Estados Unidos\n7: Inglaterra\n8: Bahamas\n9: México\n10: Emirados Árabes Unidos")
+# frotas de cada pais
+PAISES =  {
+    'Brasil': {
+        'cruzador': 1,
+        'torpedeiro': 2,
+        'destroyer': 1,
+        'couracado': 1,
+        'porta-avioes': 1
+    }, 
+    'Coreia do Norte': {
+        'cruzador': 3, 
+        'porta-avioes': 1, 
+        'destroyer': 1, 
+        'submarino': 1, 
+        'couracado': 1
+    },
+    'Vaticano': {
+        'couracado': 1,
+        'cruzador': 3, 
+        'submarino': 1,
+        'porta-avioes': 1, 
+        'torpedeiro': 1
+    },
+    'Tibet': {
+        'cruzador': 1,
+        'porta-avioes': 1,
+        'couracado': 2,
+        'destroyer': 1,
+        'submarino': 1
+    },
+    'China': {
+        'torpedeiro': 2,
+        'cruzador': 1,
+        'destroyer': 2,
+        'couracado': 1,
+        'submarino': 1
+    },
+    'Estados Unidos': {
+        'cruzador': 1,
+        'torpedeiro': 2,
+        'destroyer': 1,
+        'couracado': 1,
+        'porta-avioes': 1
+    }, 
+    'Inglaterra': {
+        'cruzador': 3, 
+        'porta-avioes': 1, 
+        'destroyer': 1, 
+        'submarino': 1, 
+        'couracado': 1
+    },
+    'Bahamas': {
+        'couracado': 1,
+        'cruzador': 3, 
+        'submarino': 1,
+        'porta-avioes': 1, 
+        'torpedeiro': 1
+    },
+    'México': {
+        'cruzador': 1,
+        'porta-avioes': 1,
+        'couracado': 2,
+        'destroyer': 1,
+        'submarino': 1
+    },
+    'Emirados Árabes Unidos': {
+        'torpedeiro': 2,
+        'cruzador': 1,
+        'destroyer': 2,
+        'couracado': 1,
+        'submarino': 1
+    }
+}
 
 
 #Jogador vai escolher o seu país
