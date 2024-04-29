@@ -46,73 +46,72 @@ PAISES= {
 #separação entre o tabuleiro e os países
 print("-------------------------")
 
-#print dos paises
 # frotas de cada pais
-PAISES =  {
-    'Brasil': {
+PAISES_FROTAS =  {
+    '1: Brasil': {
         'cruzador': 1,
         'torpedeiro': 2,
         'destroyer': 1,
         'couracado': 1,
         'porta-avioes': 1
     }, 
-    'Coreia do Norte': {
+    '2: Coreia do Norte': {
         'cruzador': 3, 
         'porta-avioes': 1, 
         'destroyer': 1, 
         'submarino': 1, 
         'couracado': 1
     },
-    'Vaticano': {
+    '3: Vaticano': {
         'couracado': 1,
         'cruzador': 3, 
         'submarino': 1,
         'porta-avioes': 1, 
         'torpedeiro': 1
     },
-    'Tibet': {
+    '4: Tibet': {
         'cruzador': 1,
         'porta-avioes': 1,
         'couracado': 2,
         'destroyer': 1,
         'submarino': 1
     },
-    'China': {
+    '5: China': {
         'torpedeiro': 2,
         'cruzador': 1,
         'destroyer': 2,
         'couracado': 1,
         'submarino': 1
     },
-    'Estados Unidos': {
+    '6: Estados Unidos': {
         'cruzador': 1,
         'torpedeiro': 2,
         'destroyer': 1,
         'couracado': 1,
         'porta-avioes': 1
     }, 
-    'Inglaterra': {
+    '7: Inglaterra': {
         'cruzador': 3, 
         'porta-avioes': 1, 
         'destroyer': 1, 
         'submarino': 1, 
         'couracado': 1
     },
-    'Bahamas': {
+    '8: Bahamas': {
         'couracado': 1,
         'cruzador': 3, 
         'submarino': 1,
         'porta-avioes': 1, 
         'torpedeiro': 1
     },
-    'México': {
+    '9: México': {
         'cruzador': 1,
         'porta-avioes': 1,
         'couracado': 2,
         'destroyer': 1,
         'submarino': 1
     },
-    'Emirados Árabes Unidos': {
+    '10: Emirados Árabes Unidos': {
         'torpedeiro': 2,
         'cruzador': 1,
         'destroyer': 2,
@@ -125,7 +124,7 @@ PAISES =  {
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     while True:
-        for num, pais in PAISES.items():
+        for num, pais in PAISES_FROTAS.items():
             print(f'{num}. {pais}')
         escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
         if escolha_numero_pais in PAISES:
