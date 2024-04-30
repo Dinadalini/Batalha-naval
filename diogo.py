@@ -1,4 +1,4 @@
-#importa as bibliotecas nescessarias para o computador
+# Importa as bibliotecas necessárias para o computador
 import random
 import time
 from colorama import Fore, Back, Style, init
@@ -17,20 +17,22 @@ CORES = {
     'white': Fore.WHITE
 }
 
-#cria o tabuleiro 
+# Cria o tabuleiro 
 def criar_tabuleiro():
     colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     linhas = list(range(1, 11))
     tabuleiro = [[' ' for _ in colunas] for _ in linhas]
     return tabuleiro
-#define o tabuleiro do jogador e do comp lado a lado
+
+# Define o tabuleiro do jogador e do comp lado a lado
 def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
     colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
     cabecalho = ' ' + '  '.join(colunas)
     print(f"    {cabecalho}          {cabecalho}")
     for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
-        linha_jogador_formatada = '   '.join(linha_jogador)
-        linha_computador_formatada = '   '.join(linha_computador)
+        linha_jogador_formatada = '   '.join(linha_jogador) + CORES['reset']
+        # Oculta os barcos do computador substituindo 'O' por ' '
+        linha_computador_formatada = '   '.join([' ' if celula == 'O' else celula for celula in linha_computador]) + CORES['reset']
         print(f"{i:2}  {linha_jogador_formatada}        {i:2}  {linha_computador_formatada}")
 
 
@@ -40,7 +42,7 @@ tabuleiro_jogador = criar_tabuleiro()
 # Imprime os tabuleiros lado a lado
 imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
 
-# quantidade de blocos por modelo de navio
+# Quantidade de blocos por modelo de navio
 CONFIGURACAO = {
     'destroyer': 3,
     'porta-avioes': 5,
@@ -49,7 +51,8 @@ CONFIGURACAO = {
     'cruzador': 2,
     'couracado': 4
 }
-#países e seus números
+
+# Países e seus números
 PAISES= {
     1: 'Brasil',
     2: 'Coreia do Norte',
@@ -63,10 +66,10 @@ PAISES= {
     10: 'Emirados Árabes Unidos'
 }
 
-#separação entre o tabuleiro e os países
+# Separação entre o tabuleiro e os países
 print("----------------------------------------------------------------------------------------------------")
 
-# frotas de cada pais
+# Frotas de cada país
 PAISES_FROTAS =  {
     '1: Brasil': {
         'cruzador': 1,
@@ -140,8 +143,7 @@ PAISES_FROTAS =  {
     }
 }
 
-
-#Jogador vai escolher o seu país
+# Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     while True:
         for num, pais in PAISES.items():
@@ -154,20 +156,18 @@ def jogador_escolhe_pais():
         else:
             print("Nação desconhecida. Digite um número válido.")
 
-
 # Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
 def computador_escolhe_pais(pais_jogador):
     paises_disponiveis_comp = list(PAISES.values())
     pais_jogador_nome = pais_jogador.split(': ')[1]  # extrai apenas o nome do país usado pelo jogador
-    paises_disponiveis_comp.remove(pais_jogador_nome)
+
     escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
     print(f'O computador escolheu o país {escolha_do_pais_computador}')
     for key, value in PAISES.items():  # find the key that corresponds to the chosen country
         if value == escolha_do_pais_computador:
             return f"{key}: {value}"  # return the country in the 'number: country' format
 
-
-#funcao do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
+# Função do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
 def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
     for navio, quantidade in frota_pais.items():
         for _ in range(quantidade):
@@ -198,30 +198,7 @@ def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
                 print("Posição inválida. Por favor, escolha novamente.")
             imprimir_tabuleiros_lado_a_lado(tabuleiro, tabuleiro_computador)  # imprime os tabuleiros após alocar cada barco
 
-
-
-#funcao que coloca os barcos do computador
-def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
-    for navio, quantidade in frota_pais.items():
-        for _ in range(quantidade):
-            while True:
-                linha_inicial = random.randint(0, 9)
-                coluna_inicial = random.randint(0, 9)
-                orientacao = random.choice(['horizontal', 'vertical'])
-
-                if orientacao == 'horizontal' and coluna_inicial + configuracao[navio] <= 10:
-                    if all(tabuleiro[linha_inicial][coluna_inicial+i] == ' ' for i in range(configuracao[navio])):
-                        for i in range(configuracao[navio]):
-                            tabuleiro[linha_inicial][coluna_inicial+i] = ' '
-                        break
-                elif orientacao == 'vertical' and linha_inicial + configuracao[navio] <= 10:
-                    if all(tabuleiro[linha_inicial+i][coluna_inicial] == ' ' for i in range(configuracao[navio])):
-                        for i in range(configuracao[navio]):
-                            tabuleiro[linha_inicial+i][coluna_inicial] = ' '
-                        break
-
-
-#funcao que coloca os barcos do computador
+# Função que coloca os barcos do computador
 def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
     for navio, quantidade in frota_pais.items():
         for _ in range(quantidade):
@@ -241,59 +218,65 @@ def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
                             tabuleiro[linha_inicial+i][coluna_inicial] = 'O'
                         break
 
-#funcao para o jogador atirar
+# Função para formatar as células do tabuleiro
+def formatar_celula(celula):
+    if celula == 'O':
+        return CORES['green'] + ' ' + CORES['reset']
+    elif celula == 'X':
+        return CORES['red'] + 'B' + CORES['reset']
+    elif celula == '~':
+        return CORES['blue'] + 'A' + CORES['reset']
+    else:
+        return ' '
+
+# Função para o jogador atirar
 def atirar(tabuleiro, linha, coluna):
-    if tabuleiro[linha][coluna] != ' ' and tabuleiro[linha][coluna] != 'O':
+    # Verifica se o local já foi atirado
+    if tabuleiro[linha][coluna] in ['X', '~']:
         print("Você já atirou aqui! Escolha outro lugar.")
         return False
+    # Verifica se acertou um barco
     elif tabuleiro[linha][coluna] == 'O':
-        tabuleiro[linha][coluna] = CORES['red'] + ' ' + CORES['reset']
+        tabuleiro[linha][coluna] = 'X'
         print(f"BOOOM! Você acertou na linha {linha+1}, coluna {chr(coluna+65)}")
+        time.sleep(2)
         return True
+    # Se atirou na água
     else:
-        tabuleiro[linha][coluna] = CORES['blue'] + ' ' + CORES['reset']
+        tabuleiro[linha][coluna] = '~'
         print(f"Água. Você atirou na linha {linha+1}, coluna {chr(coluna+65)}")
+        time.sleep(2)
         return True
-    
 
-#funcao para o computdor atirar
+# Função para o computador atirar
 def atirar_aleatorio(tabuleiro):
     while True:
         linha = random.randint(0, 9)
         coluna = random.randint(0, 9)
-        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == CORES['green'] + ' ' + CORES['reset']:
-            if tabuleiro[linha][coluna] == CORES['green'] + ' ' + CORES['reset']:
-                tabuleiro[linha][coluna] = CORES['red'] + ' ' + CORES['reset']
+        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
+            if tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
+                tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['red'], 'B', CORES['reset'])
                 print(f"BOOOM! O computador acertou na linha {linha+1}, coluna {chr(coluna+65)}")
+                time.sleep(2)  # Espera 2 segundos antes de prosseguir
                 return
             else:
-                tabuleiro[linha][coluna] = CORES['blue'] + ' ' + CORES['reset']
+                tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['blue'], 'A', CORES['reset'])
                 print(f"Água. O computador atirou na linha {linha+1}, coluna {chr(coluna+65)}")
+                time.sleep(2)  # Espera 2 segundos antes de prosseguir
                 return
 
-
-#define o tabuleiro do jogador e do comp lado a lado
-def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
-    colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
-    cabecalho = ' ' + '  '.join(colunas)
-    print(f"    {cabecalho}          {cabecalho}")
-    for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
-
-  # Substitui os barcos no tabuleiro do computador por espaços vazios- para arrumar o erro de dar o jogo como ganho depois do primeiro tiro
-        linha_computador = [' ' if celula == 'O' else celula for celula in linha_computador]
-        linha_jogador_formatada = '   '.join(linha_jogador)
-        linha_computador_formatada = '   '.join(linha_computador)
-        print(f"{i:2}  {linha_jogador_formatada}        {i:2}  {linha_computador_formatada}")
-
-#funcao para verificar se todos os barcos do computador foram atingidos
+# Função para verificar se todos os barcos do computador foram atingidos
 def verificar_barcos_computador(tabuleiro):
     for linha in tabuleiro:
-        if 'O' in linha:
-            return False
+        for celula in linha:
+            # Se houver algum 'O' no tabuleiro, isso significa que ainda há barcos do computador
+            if 'O' in celula:
+                return False
+    # Se nenhum 'O' for encontrado, isso significa que todos os barcos do computador foram atingidos
     print("Você derrubou todos os barcos do Computador. Você venceu!")
     return True
 
-#funcao para verificar se todos os barcos do jogador foram atingidos
+# Função para verificar se todos os barcos do jogador foram atingidos
 def verificar_barcos_jogador(tabuleiro):
     for linha in tabuleiro:
         if CORES['green'] + ' ' + CORES['reset'] in linha:
@@ -311,6 +294,7 @@ if __name__ == "__main__":
     print("Os barcos do seu oponente já estão em posição de batalha")
     time.sleep(3)
     print("Atenção, a batalha vai começar em 5 segundos!")
+    time.sleep(1)
     print("5...")
     time.sleep(1)
     print("4...")
@@ -331,6 +315,4 @@ if __name__ == "__main__":
             if verificar_barcos_computador(tabuleiro_computador): 
                 break
             atirar_aleatorio(tabuleiro_jogador)
-            if verificar_barcos_jogador(tabuleiro_jogador): 
-                break
-        imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
+            imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
