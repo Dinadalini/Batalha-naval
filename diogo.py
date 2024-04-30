@@ -1,6 +1,19 @@
 #importa o random pro computador escolher o país dela
 import random
 
+# Cores para o terminal
+CORES = {
+    'reset': '\u001b[0m',
+    'red': '\u001b[31m',
+    'black': '\u001b[30m',
+    'green': '\u001b[32m',
+    'yellow': '\u001b[33m',
+    'blue': '\u001b[34m',
+    'magenta': '\u001b[35m',
+    'cyan': '\u001b[36m',
+    'white': '\u001b[37m'
+}
+
 #cria o tabuleiro 
 def criar_tabuleiro():
     colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
