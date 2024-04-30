@@ -161,7 +161,9 @@ def computador_escolhe_pais(pais_jogador):
     paises_disponiveis_comp.remove(pais_jogador_nome)
     escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
     print(f'O computador escolheu o país {escolha_do_pais_computador}')
-    return escolha_do_pais_computador
+    for key, value in PAISES.items():  # find the key that corresponds to the chosen country
+        if value == escolha_do_pais_computador:
+            return f"{key}: {value}"  # return the country in the 'number: country' format
 
 
 #funcao do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
@@ -170,7 +172,11 @@ def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
         for _ in range(quantidade):
             while True:
                 print(f"Posicione o seu {navio} de tamanho {configuracao[navio]}")
-                linha_inicial = int(input("Escolha a linha inicial (1-10): ")) - 1
+                try:
+                    linha_inicial = int(input("Escolha a linha inicial (1-10): ")) - 1
+                except ValueError:
+                    print("Local desejado não está participando da guerra. Digite um número válido.")
+                    continue
                 coluna_inicial = ord(input("Escolha a coluna inicial (A-J): ").upper()) - ord('A')
                 orientacao = input("Escolha a orientação (horizontal/vertical): ").lower()
                 if orientacao == 'h':
@@ -191,8 +197,34 @@ def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
                 print("Posição inválida. Por favor, escolha novamente.")
             imprimir_tabuleiros_lado_a_lado(tabuleiro, tabuleiro_computador)  # imprime os tabuleiros após alocar cada barco
 
+
+
+#funcao que coloca os barcos do computador
+def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
+    for navio, quantidade in frota_pais.items():
+        for _ in range(quantidade):
+            while True:
+                linha_inicial = random.randint(0, 9)
+                coluna_inicial = random.randint(0, 9)
+                orientacao = random.choice(['horizontal', 'vertical'])
+
+                if orientacao == 'horizontal' and coluna_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial][coluna_inicial+i] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial][coluna_inicial+i] = ' '
+                        break
+                elif orientacao == 'vertical' and linha_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial+i][coluna_inicial] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial+i][coluna_inicial] = ' '
+                        break
+
 # Programa principal
 if __name__ == "__main__":
     pais_jogador = jogador_escolhe_pais()
     pais_computador = computador_escolhe_pais(pais_jogador)
     colocar_barcos_jogador(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)
+    colocar_barcos_computador(tabuleiro_computador, PAISES_FROTAS[pais_computador], CONFIGURACAO)
+    imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
+    print("Os barcos do seu oponente já estão em posição de batalha")
+
