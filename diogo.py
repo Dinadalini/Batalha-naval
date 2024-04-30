@@ -1,17 +1,19 @@
 #importa o random pro computador escolher o país dela
 import random
+from colorama import Fore, Back, Style, init
+init(autoreset=True)
 
 # Cores para o terminal
 CORES = {
-    'reset': '\u001b[0m',
-    'red': '\u001b[31m',
-    'black': '\u001b[30m',
-    'green': '\u001b[32m',
-    'yellow': '\u001b[33m',
-    'blue': '\u001b[34m',
-    'magenta': '\u001b[35m',
-    'cyan': '\u001b[36m',
-    'white': '\u001b[37m'
+    'reset': Style.RESET_ALL,
+    'red': Fore.RED,
+    'black': Fore.BLACK,
+    'green': Back.GREEN,
+    'yellow': Fore.YELLOW,
+    'blue': Fore.BLUE,
+    'magenta': Fore.MAGENTA,
+    'cyan': Fore.CYAN,
+    'white': Fore.WHITE
 }
 
 #cria o tabuleiro 
@@ -140,25 +142,57 @@ PAISES_FROTAS =  {
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
     while True:
-        for num, pais in PAISES_FROTAS.items():
-            print(f'{num}. {pais}')
+        for num, pais in PAISES.items():
+            print(f'{num}: {pais}')
         escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
         if escolha_numero_pais in PAISES:
-            pais_escolhido = PAISES[escolha_numero_pais]
-            print(f"Você irá defender o país {pais_escolhido}")
+            pais_escolhido = f"{escolha_numero_pais}: {PAISES[escolha_numero_pais]}"
+            print(f"Você irá defender o país {PAISES[escolha_numero_pais]}")
             return pais_escolhido
         else:
             print("Nação desconhecida. Digite um número válido.")
 
+
 # Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
 def computador_escolhe_pais(pais_jogador):
     paises_disponiveis_comp = list(PAISES.values())
-    paises_disponiveis_comp.remove(pais_jogador)
+    pais_jogador_nome = pais_jogador.split(': ')[1]  # extrai apenas o nome do país usado pelo jogador
+    paises_disponiveis_comp.remove(pais_jogador_nome)
     escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
     print(f'O computador escolheu o país {escolha_do_pais_computador}')
     return escolha_do_pais_computador
+
+
+#funcao do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
+def alocar_barcos(tabuleiro, frota_pais, configuracao):
+    for navio, quantidade in frota_pais.items():
+        for _ in range(quantidade):
+            while True:
+                print(f"Posicione o seu {navio} de tamanho {configuracao[navio]}")
+                linha_inicial = int(input("Escolha a linha inicial (1-10): ")) - 1
+                coluna_inicial = ord(input("Escolha a coluna inicial (A-J): ").upper()) - ord('A')
+                orientacao = input("Escolha a orientação (horizontal/vertical ou h/v): ").lower()
+                if orientacao == 'h':
+                    orientacao = 'horizontal'
+                elif orientacao == 'v':
+                    orientacao = 'vertical'
+
+                if orientacao == 'horizontal' and coluna_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial][coluna_inicial+i] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial][coluna_inicial+i] = CORES['green'] + ' ' + CORES['reset']
+                        break
+                elif orientacao == 'vertical' and linha_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial+i][coluna_inicial] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial+i][coluna_inicial] = CORES['green'] + ' ' + CORES['reset']
+                        break
+                print("Posição inválida. Por favor, escolha novamente.")
+            imprimir_tabuleiros_lado_a_lado(tabuleiro, tabuleiro_computador)  # imprime os tabuleiros após alocar cada barco
+
 
 # Programa principal
 if __name__ == "__main__":
     pais_jogador = jogador_escolhe_pais()
     pais_computador = computador_escolhe_pais(pais_jogador)
+    alocar_barcos(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)
