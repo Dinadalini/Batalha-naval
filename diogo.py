@@ -196,3 +196,6 @@ if __name__ == "__main__":
     pais_jogador = jogador_escolhe_pais()
     pais_computador = computador_escolhe_pais(pais_jogador)
     alocar_barcos(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)
+
+
+print('tabuleiro')
