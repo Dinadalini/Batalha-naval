@@ -1,5 +1,6 @@
-#importa o random pro computador escolher o país dela
+#importa as bibliotecas nescessarias para o computador
 import random
+import time
 from colorama import Fore, Back, Style, init
 init(autoreset=True)
 
@@ -227,4 +228,19 @@ if __name__ == "__main__":
     colocar_barcos_computador(tabuleiro_computador, PAISES_FROTAS[pais_computador], CONFIGURACAO)
     imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
     print("Os barcos do seu oponente já estão em posição de batalha")
+    time.sleep(3)
+    print("Atenção, a batalha vai começar em 5 segundos!")
+    print("5...")
+    time.sleep(1)
+    print("4...")
+    time.sleep(1)
+    print("3...")
+    time.sleep(1)
+    print("2...")
+    time.sleep(1)
+    print("1...")
+    time.sleep(1)
+    print("Vamos la!")
+    time.sleep(1) 
+    imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
 
