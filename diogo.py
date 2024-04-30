@@ -1,14 +1,14 @@
 import random
-
+#cria o tabuleiro 
 def criar_tabuleiro():
     colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
     linhas = list(range(1, 11))
     tabuleiro = [[' ' for _ in colunas] for _ in linhas]
     return tabuleiro
-
+#define o tabuleiro do jogador e do comp lado a lado
 def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
     colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
-    cabecalho = '  ' + '  '.join(colunas)
+    cabecalho = ' ' + '  '.join(colunas)
     print(f"    {cabecalho}          {cabecalho}")
     for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
         linha_jogador_formatada = '   '.join(linha_jogador)
@@ -129,10 +129,11 @@ def jogador_escolhe_pais():
             print(f'{num}. {pais}')
         escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
         if escolha_numero_pais in PAISES:
-            return PAISES[escolha_numero_pais]
+            pais_escolhido = PAISES[escolha_numero_pais]
+            print(f"Você irá defender o país {pais_escolhido}")
+            return pais_escolhido
         else:
             print("Nação desconhecida. Digite um número válido.")
-
 # Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
 def computador_escolhe_pais(pais_jogador):
     paises_disponiveis_comp = list(PAISES.values())
