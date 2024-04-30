@@ -1,4 +1,6 @@
+#importa o random pro computador escolher o país dela
 import random
+
 #cria o tabuleiro 
 def criar_tabuleiro():
     colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
@@ -45,7 +47,7 @@ PAISES= {
 }
 
 #separação entre o tabuleiro e os países
-print("-------------------------")
+print("----------------------------------------------------------------------------------------------------")
 
 # frotas de cada pais
 PAISES_FROTAS =  {
@@ -134,12 +136,13 @@ def jogador_escolhe_pais():
             return pais_escolhido
         else:
             print("Nação desconhecida. Digite um número válido.")
+
 # Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
 def computador_escolhe_pais(pais_jogador):
     paises_disponiveis_comp = list(PAISES.values())
     paises_disponiveis_comp.remove(pais_jogador)
     escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
-    print(f'O computador escolheu o país: {escolha_do_pais_computador}')
+    print(f'O computador escolheu o país {escolha_do_pais_computador}')
     return escolha_do_pais_computador
 
 # Programa principal
