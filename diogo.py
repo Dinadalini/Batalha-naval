@@ -32,6 +32,7 @@ def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
         linha_computador_formatada = '   '.join(linha_computador)
         print(f"{i:2}  {linha_jogador_formatada}        {i:2}  {linha_computador_formatada}")
 
+
 tabuleiro_computador = criar_tabuleiro()
 tabuleiro_jogador = criar_tabuleiro()
 
@@ -164,14 +165,14 @@ def computador_escolhe_pais(pais_jogador):
 
 
 #funcao do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
-def alocar_barcos(tabuleiro, frota_pais, configuracao):
+def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
     for navio, quantidade in frota_pais.items():
         for _ in range(quantidade):
             while True:
                 print(f"Posicione o seu {navio} de tamanho {configuracao[navio]}")
                 linha_inicial = int(input("Escolha a linha inicial (1-10): ")) - 1
                 coluna_inicial = ord(input("Escolha a coluna inicial (A-J): ").upper()) - ord('A')
-                orientacao = input("Escolha a orientação (horizontal/vertical ou h/v): ").lower()
+                orientacao = input("Escolha a orientação (horizontal/vertical): ").lower()
                 if orientacao == 'h':
                     orientacao = 'horizontal'
                 elif orientacao == 'v':
@@ -190,12 +191,8 @@ def alocar_barcos(tabuleiro, frota_pais, configuracao):
                 print("Posição inválida. Por favor, escolha novamente.")
             imprimir_tabuleiros_lado_a_lado(tabuleiro, tabuleiro_computador)  # imprime os tabuleiros após alocar cada barco
 
-
 # Programa principal
 if __name__ == "__main__":
     pais_jogador = jogador_escolhe_pais()
     pais_computador = computador_escolhe_pais(pais_jogador)
-    alocar_barcos(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)
-
-
-print('tabuleiro')
+    colocar_barcos_jogador(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)

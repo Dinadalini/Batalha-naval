@@ -1,24 +1,43 @@
+#importa o random pro computador escolher o país dela
 import random
+from colorama import Fore, Back, Style, init
+init(autoreset=True)
 
+# Cores para o terminal
+CORES = {
+    'reset': Style.RESET_ALL,
+    'red': Fore.RED,
+    'black': Fore.BLACK,
+    'green': Back.GREEN,
+    'yellow': Fore.YELLOW,
+    'blue': Fore.BLUE,
+    'magenta': Fore.MAGENTA,
+    'cyan': Fore.CYAN,
+    'white': Fore.WHITE
+}
+
+#cria o tabuleiro 
 def criar_tabuleiro():
-    colunas=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
-    linhas= list(range(1, 11))
-    tabuleiro= [['' for i in colunas] for i in linhas]
+    colunas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+    linhas = list(range(1, 11))
+    tabuleiro = [[' ' for _ in colunas] for _ in linhas]
     return tabuleiro
+#define o tabuleiro do jogador e do comp lado a lado
+def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
+    colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
+    cabecalho = ' ' + '  '.join(colunas)
+    print(f"    {cabecalho}          {cabecalho}")
+    for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
+        linha_jogador_formatada = '   '.join(linha_jogador)
+        linha_computador_formatada = '   '.join(linha_computador)
+        print(f"{i:2}  {linha_jogador_formatada}        {i:2}  {linha_computador_formatada}")
 
-def imprimir_tabuleiro (tabuleiro):
-    colunas = [' A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
-    print ('  '+ '  '.join(colunas))
-    for j, linha in enumerate(tabuleiro, start=1):
-        print(f'{j:2}'+ '   '.join(linha))
 
-tabuleiro_computador= criar_tabuleiro()
-tabuleiro_jogador= criar_tabuleiro()
+tabuleiro_computador = criar_tabuleiro()
+tabuleiro_jogador = criar_tabuleiro()
 
-print ("tabuleiro Computador:")
-imprimir_tabuleiro(tabuleiro_computador)
-print ("tabuleiro Jogador:")
-imprimir_tabuleiro(tabuleiro_jogador)
+# Imprime os tabuleiros lado a lado
+imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
 
 # quantidade de blocos por modelo de navio
 CONFIGURACAO = {
@@ -44,27 +63,136 @@ PAISES= {
 }
 
 #separação entre o tabuleiro e os países
-print("-------------------------")
+print("----------------------------------------------------------------------------------------------------")
 
-#print dos paises
-print("1: Brasil\n2: Coreia do Norte\n3: Vaticano\n4: Tibet\n5: China\n6: Estados Unidos\n7: Inglaterra\n8: Bahamas\n9: México\n10: Emirados Árabes Unidos")
+# frotas de cada pais
+PAISES_FROTAS =  {
+    '1: Brasil': {
+        'cruzador': 1,
+        'torpedeiro': 2,
+        'destroyer': 1,
+        'couracado': 1,
+        'porta-avioes': 1
+    }, 
+    '2: Coreia do Norte': {
+        'cruzador': 3, 
+        'porta-avioes': 1, 
+        'destroyer': 1, 
+        'submarino': 1, 
+        'couracado': 1
+    },
+    '3: Vaticano': {
+        'couracado': 1,
+        'cruzador': 3, 
+        'submarino': 1,
+        'porta-avioes': 1, 
+        'torpedeiro': 1
+    },
+    '4: Tibet': {
+        'cruzador': 1,
+        'porta-avioes': 1,
+        'couracado': 2,
+        'destroyer': 1,
+        'submarino': 1
+    },
+    '5: China': {
+        'torpedeiro': 2,
+        'cruzador': 1,
+        'destroyer': 2,
+        'couracado': 1,
+        'submarino': 1
+    },
+    '6: Estados Unidos': {
+        'cruzador': 1,
+        'torpedeiro': 2,
+        'destroyer': 1,
+        'couracado': 1,
+        'porta-avioes': 1
+    }, 
+    '7: Inglaterra': {
+        'cruzador': 3, 
+        'porta-avioes': 1, 
+        'destroyer': 1, 
+        'submarino': 1, 
+        'couracado': 1
+    },
+    '8: Bahamas': {
+        'couracado': 1,
+        'cruzador': 3, 
+        'submarino': 1,
+        'porta-avioes': 1, 
+        'torpedeiro': 1
+    },
+    '9: México': {
+        'cruzador': 1,
+        'porta-avioes': 1,
+        'couracado': 2,
+        'destroyer': 1,
+        'submarino': 1
+    },
+    '10: Emirados Árabes Unidos': {
+        'torpedeiro': 2,
+        'cruzador': 1,
+        'destroyer': 2,
+        'couracado': 1,
+        'submarino': 1
+    }
+}
 
 
 #Jogador vai escolher o seu país
 def jogador_escolhe_pais():
-    for num, pais in PAISES.items():
-        print(f'{num}. {pais}')
-    escolha_numero_pais= int(input("Digite o número de nação que você irá defender: "))
-    if escolha_numero_pais in PAISES: 
-        return PAISES[escolha_numero_pais]
-    else:
-        print("Nação desconhecida. Digite um número válido")
-    return jogador_escolhe_pais()
+    while True:
+        for num, pais in PAISES.items():
+            print(f'{num}: {pais}')
+        escolha_numero_pais = int(input("Digite o número de nação que você irá defender: "))
+        if escolha_numero_pais in PAISES:
+            pais_escolhido = f"{escolha_numero_pais}: {PAISES[escolha_numero_pais]}"
+            print(f"Você irá defender o país {PAISES[escolha_numero_pais]}")
+            return pais_escolhido
+        else:
+            print("Nação desconhecida. Digite um número válido.")
 
-#computador escolhe um país diferente do jogador aleatoriamente e printa o pais escolhido
-def computador_escolhe_pais():
-    paises_disponiveis_comp= list(PAISES.value())
-    paises_disponiveis_comp.remove(jogador_escolhe_pais)
-    escolha_do_pais_computador= random.choice(paises_disponiveis_comp)
-    print(f'O computador escolheu o país: {escolha_do_pais_computador}')
+
+# Computador escolhe um país diferente do jogador aleatoriamente e printa o país escolhido
+def computador_escolhe_pais(pais_jogador):
+    paises_disponiveis_comp = list(PAISES.values())
+    pais_jogador_nome = pais_jogador.split(': ')[1]  # extrai apenas o nome do país usado pelo jogador
+    paises_disponiveis_comp.remove(pais_jogador_nome)
+    escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
+    print(f'O computador escolheu o país {escolha_do_pais_computador}')
     return escolha_do_pais_computador
+
+
+#funcao do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
+def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
+    for navio, quantidade in frota_pais.items():
+        for _ in range(quantidade):
+            while True:
+                print(f"Posicione o seu {navio} de tamanho {configuracao[navio]}")
+                linha_inicial = int(input("Escolha a linha inicial (1-10): ")) - 1
+                coluna_inicial = ord(input("Escolha a coluna inicial (A-J): ").upper()) - ord('A')
+                orientacao = input("Escolha a orientação (horizontal/vertical): ").lower()
+                if orientacao == 'h':
+                    orientacao = 'horizontal'
+                elif orientacao == 'v':
+                    orientacao = 'vertical'
+
+                if orientacao == 'horizontal' and coluna_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial][coluna_inicial+i] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial][coluna_inicial+i] = CORES['green'] + ' ' + CORES['reset']
+                        break
+                elif orientacao == 'vertical' and linha_inicial + configuracao[navio] <= 10:
+                    if all(tabuleiro[linha_inicial+i][coluna_inicial] == ' ' for i in range(configuracao[navio])):
+                        for i in range(configuracao[navio]):
+                            tabuleiro[linha_inicial+i][coluna_inicial] = CORES['green'] + ' ' + CORES['reset']
+                        break
+                print("Posição inválida. Por favor, escolha novamente.")
+            imprimir_tabuleiros_lado_a_lado(tabuleiro, tabuleiro_computador)  # imprime os tabuleiros após alocar cada barco
+
+# Programa principal
+if __name__ == "__main__":
+    pais_jogador = jogador_escolhe_pais()
+    pais_computador = computador_escolhe_pais(pais_jogador)
+    colocar_barcos_jogador(tabuleiro_jogador, PAISES_FROTAS[pais_jogador], CONFIGURACAO)
