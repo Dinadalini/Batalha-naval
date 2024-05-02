@@ -26,9 +26,9 @@ def criar_tabuleiro():
 
 # Define o tabuleiro do jogador e do comp lado a lado
 def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
-    colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
+    colunas = [' A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
     cabecalho = ' ' + '  '.join(colunas)
-    print(f"    {cabecalho}          {cabecalho}")
+    print(f"  {cabecalho}            {cabecalho}")
     for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
         linha_jogador_formatada = '   '.join(linha_jogador) + CORES['reset']
         # Oculta os barcos do computador substituindo 'O' por ' '
@@ -219,6 +219,17 @@ def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
                             tabuleiro[linha_inicial+i][coluna_inicial] = 'O'
                         break
 
+# Define o tabuleiro do jogador e do comp lado a lado
+def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
+    colunas = [' A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
+    cabecalho = ' ' + '  '.join(colunas)
+    print(f"  {cabecalho}            {cabecalho}")
+    for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
+        linha_jogador_formatada = '   '.join(linha_jogador) + CORES['reset']
+        # Oculta os barcos do computador substituindo 'O' por ' '
+        linha_computador_formatada = '   '.join([' ' if celula == 'O' else celula for celula in linha_computador]) + CORES['reset']
+        print(f"{i:2}  {linha_jogador_formatada:<{len(linha_jogador_formatada)+2}}        {i:2}  {linha_computador_formatada}")
+
 # Função para formatar as células do tabuleiro
 def formatar_celula(celula):
     if celula == 'O':
@@ -228,7 +239,7 @@ def formatar_celula(celula):
     elif celula == '{} {} {}'.format(CORES['blue'], 'A', CORES['reset']):
         return CORES['blue'] + 'A' + CORES['reset']
     else:
-        return '' # adiciona um espaço extra para corresponder ao comprimento das outras células
+        return ' ' # adiciona um espaço extra para corresponder ao comprimento das outras células
 
 def atirar(tabuleiro, linha, coluna):
     # Verifica se o local já foi atirado
@@ -243,28 +254,29 @@ def atirar(tabuleiro, linha, coluna):
         return True
     # Se atirou na água
     else:
-        tabuleiro[linha][coluna] = '{}{}{}'.format(CORES['blue'], 'A', CORES['reset'])
+        tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['blue'], 'A', CORES['reset'])
         print(f"Água. Você atirou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
-
 
 # Função para o computador atirar
 def atirar_aleatorio(tabuleiro):
     while True:
         linha = random.randint(0, 9)
         coluna = random.randint(0, 9)
-        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
-            if tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
-                tabuleiro[linha][coluna] = ' {} '.format(CORES['red'] + 'B' + CORES['reset'])
+        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{}'.format(CORES['green'], ' ', CORES['reset']):
+            if tabuleiro[linha][coluna] == '{}':
+                tabuleiro[linha][coluna] = '{}'.format(CORES['green'], ' ', CORES['reset'])
+                tabuleiro[linha][coluna] = '{}'.format(CORES['red'] + 'B' + CORES['reset'])
                 print(f"BOOOM! O computador acertou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
             else:
-                tabuleiro[linha][coluna] = ' {} '.format(CORES['blue'] + 'A' + CORES['reset'])
+                tabuleiro[linha][coluna] = '{}'.format(CORES['blue'] + 'A' + CORES['reset'])
                 print(f"Água. O computador atirou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
+
 
 
 # Função para verificar se todos os barcos do computador foram atingidos
