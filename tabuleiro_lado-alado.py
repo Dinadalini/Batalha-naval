@@ -332,4 +332,3 @@ if __name__ == "__main__":
                 break
             atirar_aleatorio(tabuleiro_jogador)
             imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
-
