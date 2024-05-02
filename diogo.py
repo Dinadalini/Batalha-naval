@@ -163,9 +163,9 @@ def computador_escolhe_pais(pais_jogador):
 
     escolha_do_pais_computador = random.choice(paises_disponiveis_comp)
     print(f'O computador escolheu o país {escolha_do_pais_computador}')
-    for key, value in PAISES.items():  # find the key that corresponds to the chosen country
+    for key, value in PAISES.items():
         if value == escolha_do_pais_computador:
-            return f"{key}: {value}"  # return the country in the 'number: country' format
+            return f"{key}: {value}"
 
 # Função do jogador para alocar barcos no tabuleiro na vertical ou horizontal.
 def colocar_barcos_jogador(tabuleiro, frota_pais, configuracao):
@@ -224,7 +224,7 @@ def formatar_celula(celula):
         return CORES['green'] + ' ' + CORES['reset']
     elif celula == 'X':
         return CORES['red'] + 'B' + CORES['reset']
-    elif celula == '~':
+    elif celula == 'X':
         return CORES['blue'] + 'A' + CORES['reset']
     else:
         return ' '
@@ -232,7 +232,7 @@ def formatar_celula(celula):
 # Função para o jogador atirar
 def atirar(tabuleiro, linha, coluna):
     # Verifica se o local já foi atirado
-    if tabuleiro[linha][coluna] in ['X', '~']:
+    if tabuleiro[linha][coluna] in ['X', 'X']:
         print("Você já atirou aqui! Escolha outro lugar.")
         return False
     # Verifica se acertou um barco
@@ -243,7 +243,7 @@ def atirar(tabuleiro, linha, coluna):
         return True
     # Se atirou na água
     else:
-        tabuleiro[linha][coluna] = '~'
+        tabuleiro[linha][coluna] = 'X'
         print(f"Água. Você atirou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
@@ -257,22 +257,20 @@ def atirar_aleatorio(tabuleiro):
             if tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
                 tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['red'], 'B', CORES['reset'])
                 print(f"BOOOM! O computador acertou na linha {linha+1}, coluna {chr(coluna+65)}")
-                time.sleep(2)  # Espera 2 segundos antes de prosseguir
+                time.sleep(2)
                 return
             else:
                 tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['blue'], 'A', CORES['reset'])
                 print(f"Água. O computador atirou na linha {linha+1}, coluna {chr(coluna+65)}")
-                time.sleep(2)  # Espera 2 segundos antes de prosseguir
+                time.sleep(2)
                 return
 
 # Função para verificar se todos os barcos do computador foram atingidos
 def verificar_barcos_computador(tabuleiro):
     for linha in tabuleiro:
         for celula in linha:
-            # Se houver algum 'O' no tabuleiro, isso significa que ainda há barcos do computador
             if 'O' in celula:
                 return False
-    # Se nenhum 'O' for encontrado, isso significa que todos os barcos do computador foram atingidos
     print("Você derrubou todos os barcos do Computador. Você venceu!")
     return True
 
