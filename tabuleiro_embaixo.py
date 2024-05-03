@@ -231,20 +231,21 @@ def formatar_celula(celula):
         return ' ' # adiciona um espaço extra para corresponder ao comprimento das outras células
 
 # Função para o jogador atirar
+# Função para o jogador atirar
 def atirar(tabuleiro, linha, coluna):
     # Verifica se o local já foi atirado
-    if tabuleiro[linha][coluna] in ['{}{} {}'.format(CORES['red'], 'B', CORES['reset']), '{}{} {}'.format(CORES['blue'], 'A', CORES['reset'])]:
+    if tabuleiro[linha][coluna] in [CORES['red'] + '         B' + CORES['reset'], CORES['blue'] + '         A' + CORES['reset']]:
         print("Você já atirou aqui! Escolha outro lugar.")
         return False
     # Verifica se acertou um barco
     elif tabuleiro[linha][coluna] == 'O':
-        tabuleiro[linha][coluna] = '{}{} {}'.format(CORES['red'], 'B', CORES['reset'])
+        tabuleiro[linha][coluna] = CORES['red'] + '         B' + CORES['reset']
         print(f"BOOOM! Você acertou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
     # Se atirou na água
     else:
-        tabuleiro[linha][coluna] = '{}{} {}'.format(CORES['blue'], 'A', CORES['reset'])
+        tabuleiro[linha][coluna] = CORES['blue'] + '        A' + CORES['reset']
         print(f"Água. Você atirou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
