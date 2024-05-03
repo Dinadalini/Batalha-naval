@@ -26,13 +26,13 @@ def criar_tabuleiro():
 
 # Define o tabuleiro do jogador e do comp lado a lado
 def imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador):
-    colunas = ['A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
+    colunas = [' A', ' B', ' C', ' D', ' E', ' F', ' G', ' H', ' I', ' J']
     cabecalho = ' ' + '  '.join(colunas)
-    print(f"    {cabecalho}          {cabecalho}")
+    print(f"  {cabecalho}            {cabecalho}")
     for i, (linha_jogador, linha_computador) in enumerate(zip(tabuleiro_jogador, tabuleiro_computador), start=1):
         linha_jogador_formatada = '   '.join(linha_jogador) + CORES['reset']
         # Oculta os barcos do computador substituindo 'O' por ' '
-        linha_computador_formatada = '   '.join([' ' if celula == 'O' else celula for celula in linha_computador]) + CORES['reset']
+        linha_computador_formatada = '  '.join([' ' if celula == 'O' else celula for celula in linha_computador]) + CORES['reset']
         print(f"{i:2}  {linha_jogador_formatada:<{len(linha_jogador_formatada)+2}}        {i:2}  {linha_computador_formatada}")
 
 
@@ -223,48 +223,50 @@ def colocar_barcos_computador(tabuleiro, frota_pais, configuracao):
 def formatar_celula(celula):
     if celula == 'O':
         return CORES['green'] + ' ' + CORES['reset']
-    elif celula == '{} {} {}'.format(CORES['red'], 'B', CORES['reset']):
+    elif celula == '{}'.format(CORES['red'], 'B', CORES['reset']):
         return CORES['red'] + 'B' + CORES['reset']
-    elif celula == '{} {} {}'.format(CORES['blue'], 'A', CORES['reset']):
+    elif celula == '{}'.format(CORES['blue'], 'A', CORES['reset']):
         return CORES['blue'] + 'A' + CORES['reset']
     else:
-        return '' # adiciona um espaço extra para corresponder ao comprimento das outras células
+        return ' ' # adiciona um espaço extra para corresponder ao comprimento das outras células
 
+# Função para o jogador atirar
+# Função para o jogador atirar
 def atirar(tabuleiro, linha, coluna):
     # Verifica se o local já foi atirado
-    if tabuleiro[linha][coluna] in ['{} {} {}'.format(CORES['red'], 'B', CORES['reset']), '{} {} {}'.format(CORES['blue'], 'A', CORES['reset'])]:
+    if tabuleiro[linha][coluna] in [CORES['red'] + '         B' + CORES['reset'], CORES['blue'] + '          A' + CORES['reset']]:
         print("Você já atirou aqui! Escolha outro lugar.")
         return False
     # Verifica se acertou um barco
     elif tabuleiro[linha][coluna] == 'O':
-        tabuleiro[linha][coluna] = '{} {} {}'.format(CORES['red'], 'B', CORES['reset'])
+        tabuleiro[linha][coluna] = CORES['red'] + '         B' + CORES['reset']
         print(f"BOOOM! Você acertou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
     # Se atirou na água
     else:
-        tabuleiro[linha][coluna] = '{}{}{}'.format(CORES['blue'], 'A', CORES['reset'])
+        tabuleiro[linha][coluna] = CORES['blue'] + '         A' + CORES['reset']
         print(f"Água. Você atirou na linha {linha+1}, coluna {chr(coluna+65)}")
         time.sleep(2)
         return True
 
-
 # Função para o computador atirar
 def atirar_aleatorio(tabuleiro):
+    possiveis_coordenadas = [(linha, coluna) for linha in range(10) for coluna in range(10) if tabuleiro[linha][coluna] not in ['{}{} {}'.format(CORES['red'], 'B', CORES['reset']), '{}{} {}'.format(CORES['blue'], 'A', CORES['reset'])]]
     while True:
-        linha = random.randint(0, 9)
-        coluna = random.randint(0, 9)
-        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
-            if tabuleiro[linha][coluna] == '{} {} {}'.format(CORES['green'], ' ', CORES['reset']):
-                tabuleiro[linha][coluna] = ' {} '.format(CORES['red'] + 'B' + CORES['reset'])
+        linha, coluna = random.choice(possiveis_coordenadas)
+        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{}'.format(CORES['green'], ' ', CORES['reset']):
+            if tabuleiro[linha][coluna] == '{}'.format(CORES['green'], ' ', CORES['reset']):
+                tabuleiro[linha][coluna] = '{}'.format(CORES['red'] + 'B' + CORES['reset'])
                 print(f"BOOOM! O computador acertou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
             else:
-                tabuleiro[linha][coluna] = ' {} '.format(CORES['blue'] + 'A' + CORES['reset'])
+                tabuleiro[linha][coluna] = '{}'.format(CORES['blue'] + 'A' + CORES['reset'])
                 print(f"Água. O computador atirou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
+
 
 
 # Função para verificar se todos os barcos do computador foram atingidos
@@ -332,4 +334,6 @@ if __name__ == "__main__":
                 break
             atirar_aleatorio(tabuleiro_jogador)
             imprimir_tabuleiros_lado_a_lado(tabuleiro_jogador, tabuleiro_computador)
+            if verificar_barcos_jogador(tabuleiro_jogador):
+                break
 
