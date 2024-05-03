@@ -251,22 +251,22 @@ def atirar(tabuleiro, linha, coluna):
         return True
 
 # Função para o computador atirar
+# Função para o computador atirar
 def atirar_aleatorio(tabuleiro):
-    possiveis_coordenadas = [(linha, coluna) for linha in range(10) for coluna in range(10) if tabuleiro[linha][coluna] not in ['{}{} {}'.format(CORES['red'], 'B', CORES['reset']), '{}{} {}'.format(CORES['blue'], 'A', CORES['reset'])]]
+    possiveis_coordenadas = [(linha, coluna) for linha in range(10) for coluna in range(10) if tabuleiro[linha][coluna] not in [CORES['red'] + 'B' + CORES['reset'], CORES['blue'] + 'A' + CORES['reset']]]
     while True:
         linha, coluna = random.choice(possiveis_coordenadas)
-        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == '{}'.format(CORES['green'], ' ', CORES['reset']):
-            if tabuleiro[linha][coluna] == '{}'.format(CORES['green'], ' ', CORES['reset']):
-                tabuleiro[linha][coluna] = '{}'.format(CORES['red'] + 'B' + CORES['reset'])
+        if tabuleiro[linha][coluna] == ' ' or tabuleiro[linha][coluna] == CORES['green'] + ' ' + CORES['reset']:
+            if tabuleiro[linha][coluna] == CORES['green'] + ' ' + CORES['reset']:
+                tabuleiro[linha][coluna] = CORES['red'] + 'B' + CORES['reset']
                 print(f"BOOOM! O computador acertou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
             else:
-                tabuleiro[linha][coluna] = '{}'.format(CORES['blue'] + 'A' + CORES['reset'])
+                tabuleiro[linha][coluna] = CORES['blue'] + 'A' + CORES['reset']
                 print(f"Água. O computador atirou na linha {linha+1}, coluna {chr(coluna+65)}")
                 time.sleep(2)
                 return
-
 
 
 # Função para verificar se todos os barcos do computador foram atingidos
